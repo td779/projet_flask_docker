@@ -1,0 +1,73 @@
+version: '2.21.0'
+
+networks:
+  pingpongnet:
+    name: pingpongnet
+
+services:
+  server3-registry:
+    build:
+      context: ./server3
+      dockerfile: server3.dockerfile
+    image: server3-registry
+    container_name: server3-registry
+    ports:
+      - "8080:8080"
+    networks:
+      - pingpongnet
+
+  server4-broker:
+    build:
+      context: ./broker
+      dockerfile: server4.dockerfile
+    image: server4-broker
+    container_name: server4-broker
+    ports:
+      - "1111:1111"
+    networks:
+      - pingpongnet
+    depends_on:
+      - server3-registry
+
+  server5-gateway:
+    build:
+      context: ./gateway
+      dockerfile: server5.dockerfile
+    image: server5-gateway
+    container_name: server5-gateway
+    ports:
+      - "8574:8574"
+    networks:
+      - pingpongnet
+    depends_on:
+      - server4-broker
+
+  server2:
+    build:
+      context: ./server2
+      dockerfile: server2.dockerfile
+    image: server2
+    #ports:
+     # - "5372:5372"
+    networks:
+      - pingpongnet
+    deploy:
+      replicas: 3
+    depends_on:
+      - server5-gateway
+
+  server1:
+    build:
+      context: ./server1
+      dockerfile: server1.dockerfile
+    image: server1
+    container_name: server1
+    ports:
+      - "4567:4567"
+    networks:
+      - pingpongnet
+    #deploy:
+    #  replicas: 3
+    depends_on:
+      - server2
+

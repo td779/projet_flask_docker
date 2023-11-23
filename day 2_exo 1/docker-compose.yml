@@ -1,0 +1,56 @@
+version: '2.21.0'
+
+networks:
+  pingpongnet:
+    name: pingpongnet
+
+services:
+  server3:
+    build:
+      context: ./server3
+      dockerfile: server3.dockerfile
+    image: server3
+    container_name: server3
+    ports:
+      - "8080:8080"
+    networks:
+      - pingpongnet
+
+  server4:
+    build:
+      context: ./server4
+      dockerfile: server4.dockerfile
+    image: server4
+    container_name: server4
+    ports:
+      - "1111:1111"
+    networks:
+      - pingpongnet
+    depends_on:
+      - server3
+
+  server1:
+    build:
+      context: ./server1
+      dockerfile: server1.dockerfile
+    image: server1
+    container_name: server1
+    ports:
+      - "4567:4567"
+    networks:
+      - pingpongnet
+    depends_on:
+      - server3
+
+  server2:
+    build:
+      context: ./server2
+      dockerfile: server2.dockerfile
+    image: server2
+    container_name: server2
+    ports:
+      - "5372:5372"
+    networks:
+      - pingpongnet
+    depends_on:
+      - server3
