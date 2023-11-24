@@ -1,0 +1,54 @@
+version: '2.21.0'
+
+networks:
+  spider:
+    name: spider
+
+services:
+  planner:
+    build:
+      context: ./planner
+      dockerfile: planner.dockerfile
+    image: planner
+    container_name: planner
+    hostname: planner
+    ports:
+      - "3000:3000"
+    environment:
+      - TASK=50
+    networks:
+      - spider
+
+  # worker:
+  #     build:
+  #       context: ./worker
+  #       dockerfile: worker.dockerfile
+  #     image: worker
+  #     #deploy:
+  #      # replicas: 10
+  #     environment:
+  #       - HOSTNAME=worker
+  #       - PORT=8080
+  #     networks:
+  #       - spider
+  #     depends_on:
+  #       - planner
+
+  # worker2:
+  #     build:
+  #       context: ./worker
+  #       dockerfile: worker.dockerfile
+  #     image: worker
+  #     container_name: worker2
+  #     hostname: worker2
+  #     environment:
+  #       - HOSTNAME=worker2
+  #       - PORT=8070        
+  #       - ADD=false
+  #       - MULT=true
+  #     ports:
+  #       - "8070:8070"
+  #     networks:
+  #       - spider
+  #     depends_on:
+  #       - planner       
