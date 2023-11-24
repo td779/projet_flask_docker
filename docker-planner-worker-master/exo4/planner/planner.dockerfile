@@ -8,7 +8,7 @@ COPY package*.json ./
 
 RUN npm install --save dotenv
 
-ENV TASKS=20
+ENV TASKS=50
 
 COPY . .
 

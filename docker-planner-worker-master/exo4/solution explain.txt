@@ -1,0 +1,13 @@
+Avec une compétence limité, je ne peux pas trouver une solution avec docker compose.
+Finalement, j'ai décidé à utiliser le méthode bash pour résoudre le problème donné.
+
+Sur le commande de linux, vous entrez:
+    bash build.sh
+Il va créer 1 planner et 10 worker avec le nom_de_container et le port_de_contener bien numéroté pour faciiliter le suivi.
+Le fichier build.sh lancera par l'ordre :
+- la création un image de planner, de worker, de réseau "spider"
+- la création les containers avec le nombre indiqué : 1 planner (avec 50 task) & 10 worker
+    le nombre worker est facilement à changer en cliquant worker-run.sh et modifier les valeurs dans "for i in {1..10}" - ligne 10 
+
+
+le fichier docker-compose.yml n'est pas utilisé dans cet exercice.

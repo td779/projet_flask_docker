@@ -11,7 +11,7 @@ services:
       dockerfile: planner.dockerfile
     image: planner
     container_name: planner
-    hostname: worker
+    hostname: planner
     ports:
       - "3000:3000"
     networks:

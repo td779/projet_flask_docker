@@ -6,6 +6,7 @@ WORKDIR /home/app
 
 COPY package*.json ./
 
+RUN npm install
 RUN npm install --save dotenv
 
 ENV MULT=true ADD=true PORT=8080
